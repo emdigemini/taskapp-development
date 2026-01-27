@@ -3,20 +3,26 @@ import toast from "react-hot-toast";
 import axiosInstance from "../../lib/axios.js";
 
 const Login = () => {
+  const [ loading, setLoading ] = useState(false);
   const [ username, setUsername ] = useState("");
   const [ password, setPassword ] = useState("");
 
   const login = async () => {
+    if(loading) return;
     if(!username || !password)
       return toast.error("All fields are required!");
 
     try {
+      setLoading(true);
       const res = await axiosInstance.post("/login", { username, password });
       setUsername("");
       setPassword("");
       toast.success("Login successfully.")
     } catch (err) {
-      console.log("Error failed to login, please try again", err);
+      toast.error(err.response?.data.message || "Server failed, try again later");
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -34,7 +40,8 @@ const Login = () => {
         onChange={(e) => setPassword(e.target.value)} value={password} />
         <a className="text-blue-600 font-semibold" href="">Forgot password?</a>
       </div>
-      <button className="text-white font-bold tracking-wider w-[80%] md:w-100 bg-blue p-3 rounded-xl cursor-pointer" onClick={login}>LOG IN</button>
+      <button className="text-white font-bold tracking-wider w-[80%] md:w-100 bg-blue p-3 rounded-xl 
+      cursor-pointer disabled:cursor-wait disabled:opacity-70" onClick={login} disabled={loading} >LOG IN</button>
       <a className="text-blue-600 font-semibold" href="/signup"><u>Create account</u></a>
     </div>
   )

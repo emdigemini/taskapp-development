@@ -28,6 +28,7 @@ const SignUp = () => {
       setConfirmPassword(""); 
     } catch (err) {
       toast.error(err.response?.data?.message || "Server failed, please try later");
+      setLoading(false);
     } finally {
       setLoading(false);
     }
@@ -56,7 +57,7 @@ const SignUp = () => {
         <input className="border border-dark-gray rounded-lg py-1 px-2 text-txt" type="password" 
         value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
       </div>
-      <button className="text-white font-bold tracking-wider w-[80%] md:w-100 bg-blue p-3 rounded-xl cursor-pointer disabled:cursor-wait" 
+      <button className="text-white font-bold tracking-wider w-[80%] md:w-100 bg-blue p-3 rounded-xl cursor-pointer disabled:cursor-wait disabled:opacity-70" 
       onClick={signup} disabled={loading} >SIGN UP</button>
       <a className="text-blue-600 font-semibold" href="/"><u>Have an account?</u></a>
     </div>
