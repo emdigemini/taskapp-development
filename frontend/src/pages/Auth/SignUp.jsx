@@ -3,12 +3,15 @@ import axiosInstance from "../../lib/axios";
 import toast from "react-hot-toast";
 
 const SignUp = () => {
+  const [ loading, setLoading ] = useState(false);
   const [ email, setEmail ] = useState("");
   const [ username, setUsername ] = useState("");
   const [ password, setPassword ] = useState("");
   const [ confirmPassword, setConfirmPassword ] = useState("");
 
   const signup = async () => {
+    console.log("hi");
+    if(loading) return; 
     if(!email || !username || !password || !confirmPassword)
       return toast.error("All fields are required");
 
@@ -16,6 +19,7 @@ const SignUp = () => {
       return toast.error("Passwords do not match")
 
     try {
+      setLoading(true);
       const res = await axiosInstance.post("/signup", { email, username, password, confirmPassword }); 
       toast.success("Account created successfully!")
       setEmail("");
@@ -24,6 +28,8 @@ const SignUp = () => {
       setConfirmPassword(""); 
     } catch (err) {
       toast.error(err.response?.data?.message || "Server failed, please try later");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -50,7 +56,8 @@ const SignUp = () => {
         <input className="border border-dark-gray rounded-lg py-1 px-2 text-txt" type="password" 
         value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
       </div>
-      <button className="text-white font-bold tracking-wider w-[80%] md:w-100 bg-blue p-3 rounded-xl cursor-pointer" onClick={signup}>SIGN UP</button>
+      <button className="text-white font-bold tracking-wider w-[80%] md:w-100 bg-blue p-3 rounded-xl cursor-pointer disabled:cursor-wait" 
+      onClick={signup} disabled={loading} >SIGN UP</button>
       <a className="text-blue-600 font-semibold" href="/"><u>Have an account?</u></a>
     </div>
   )
