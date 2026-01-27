@@ -16,13 +16,14 @@ const SignUp = () => {
       return toast.error("Passwords do not match")
 
     try {
-      const validate = await axiosInstance.get("/signup");
-      console.log(validate.data);
       const res = await axiosInstance.post("/signup", { email, username, password, confirmPassword }); 
-      console.log(res.data);
       toast.success("Account created successfully!")
+      setEmail("");
+      setUsername("");
+      setPassword("");
+      setConfirmPassword(""); 
     } catch (err) {
-      toast.error("Server failed, please try later", err);
+      toast.error(err.response?.data?.message || "Server failed, please try later");
     }
   }
 
@@ -32,22 +33,22 @@ const SignUp = () => {
       <div className="flex flex-col w-[80%] md:w-100 gap-1">
         <label className="text-txt" htmlFor="username">Email:</label>
         <input className="border border-dark-gray rounded-lg py-1 px-2 text-txt" type="email" 
-        onChange={(e) => setEmail(e.target.value)} />
+        value={email} onChange={(e) => setEmail(e.target.value)} />
       </div>  
       <div className="flex flex-col w-[80%] md:w-100 gap-1">
         <label className="text-txt" htmlFor="username">Create Username:</label>
         <input className="border border-dark-gray rounded-lg py-1 px-2 text-txt" type="text" 
-        onChange={(e) => setUsername(e.target.value)} />
+        value={username} onChange={(e) => setUsername(e.target.value)} />
       </div>
       <div className="flex flex-col w-[80%] md:w-100 gap-1">
         <label className="text-txt" htmlFor="password">Create Password:</label>
         <input className="border border-dark-gray rounded-lg py-1 px-2 text-txt" type="password" 
-        onChange={(e) => setPassword(e.target.value)} />
+        value={password} onChange={(e) => setPassword(e.target.value)} />
       </div>
       <div className="flex flex-col w-[80%] md:w-100 gap-1">
         <label className="text-txt" htmlFor="password">Confirm Password:</label>
         <input className="border border-dark-gray rounded-lg py-1 px-2 text-txt" type="password" 
-        onChange={(e) => setConfirmPassword(e.target.value)} />
+        value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
       </div>
       <button className="text-white font-bold tracking-wider w-[80%] md:w-100 bg-blue p-3 rounded-xl cursor-pointer" onClick={signup}>SIGN UP</button>
       <a className="text-blue-600 font-semibold" href="/"><u>Have an account?</u></a>

@@ -32,10 +32,14 @@ export const createUser = async (req, res) => {
     if(password.length < 8)
       return res.status(400).json({message: "Password must be at least 8 characters"});
 
-    const existingUser = await  User.findOne({ $or: [{ username }, { email }] });
-    if(existingUser)
-      return res.status(400).json({message: "username or email already exists"});
-    
+    const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+    if(existingUser){
+      if(existingUser.email === email)
+        return res.status(400).json({message: "Email already exists"});
+      if(existingUser.username === username)
+        return res.status(400).json({message: "Username already exists"});
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({ username, email, password: hashedPassword });
