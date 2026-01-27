@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import axiosInstance from "../../lib/axios.js";
 
 const Login = () => {
   const [ loading, setLoading ] = useState(false);
+  const [ showPass, setShowPass ] = useState(false);
   const [ username, setUsername ] = useState("");
   const [ password, setPassword ] = useState("");
 
@@ -34,9 +36,14 @@ const Login = () => {
         <input className="border border-dark-gray rounded-lg py-1 px-2 text-txt" type="text"
         onChange={(e) => setUsername(e.target.value)} value={username} />
       </div>
-      <div className="flex flex-col w-[80%] md:w-100 gap-1">
+      <div className="relative flex flex-col w-[80%] md:w-100 gap-1">
         <label className="text-txt" htmlFor="password">Password:</label>
-        <input className="border border-dark-gray rounded-lg py-1 px-2 text-txt" type="password" 
+        {showPass 
+        ? <FaEye className="absolute top-1/2 right-1.5 -translate-x-1/2 -translate-y-1/2 cursor-pointer text-amber-50" 
+        onClick={() => setShowPass(false)}/>
+        : <FaEyeSlash className="absolute top-1/2 right-1.5 -translate-x-1/2 -translate-y-1/2 cursor-pointer text-amber-50"
+        onClick={() => setShowPass(true)} />}
+        <input className="border border-dark-gray rounded-lg py-1 px-2 text-txt" type={showPass ? "text" : "password"} 
         onChange={(e) => setPassword(e.target.value)} value={password} />
         <a className="text-blue-600 font-semibold" href="">Forgot password?</a>
       </div>
