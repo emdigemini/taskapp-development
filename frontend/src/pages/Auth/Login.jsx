@@ -11,15 +11,13 @@ const Login = () => {
 
   const login = async () => {
     if(loading) return;
-    if(!username || !password)
-      return toast.error("All fields are required!");
 
     try {
       setLoading(true);
       const res = await axiosInstance.post("/login", { username, password });
-      setUsername("");
-      setPassword("");
-      toast.success("Login successfully.")
+      // setUsername("");
+      // setPassword("");
+      toast.success(res.data.message);
     } catch (err) {
       toast.error(err.response?.data.message || "Server failed, try again later");
       setLoading(false);

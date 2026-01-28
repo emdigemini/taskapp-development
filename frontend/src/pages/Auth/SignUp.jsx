@@ -13,18 +13,12 @@ const SignUp = () => {
   const [ showPass2, setShowPass2 ] = useState(false);
 
   const signup = async () => {
-    console.log("hi");
     if(loading) return; 
-    if(!email || !username || !password || !confirmPassword)
-      return toast.error("All fields are required");
-
-    if(password !== confirmPassword)
-      return toast.error("Passwords do not match")
 
     try {
       setLoading(true);
       const res = await axiosInstance.post("/signup", { email, username, password, confirmPassword }); 
-      toast.success("Account created successfully!")
+      toast.success(res.data.message)
       setEmail("");
       setUsername("");
       setPassword("");

@@ -4,6 +4,7 @@ import "dotenv/config";
 import cors from "cors";
 import jwt from "jsonwebtoken";
 
+import rateLimiter from "./middleware/rateLimiter.js";
 import { connectDB } from "./config/db.js";
 import signupRoutes from "./routes/auth/signupRoutes.js";
 import loginRoutes from "./routes/auth/loginRoutes.js";
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(cors({
   origin: "http://localhost:5173"
 }));
+app.use(rateLimiter);
 
 // routes
 app.use("/api/signup", signupRoutes);
