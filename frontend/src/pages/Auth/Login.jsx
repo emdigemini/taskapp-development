@@ -15,8 +15,8 @@ const Login = () => {
     try {
       setLoading(true);
       const res = await axiosInstance.post("/login", { username, password });
-      // setUsername("");
-      // setPassword("");
+      setUsername("");
+      setPassword("");
       toast.success(res.data.message);
     } catch (err) {
       toast.error(err.response?.data.message || "Server failed, try again later");
@@ -31,17 +31,13 @@ const Login = () => {
     flex flex-col gap-8 justify-center items-center backdrop-blur-lg top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <div className="flex flex-col w-[80%] md:w-100 gap-1">
         <label className="text-txt" htmlFor="username">Username:</label>
-        <input className="border border-dark-gray rounded-lg py-1 px-2 text-txt" type="text"
+        <input id="username" className="border border-dark-gray rounded-lg py-1 px-2 text-txt" type="text"
         onChange={(e) => setUsername(e.target.value)} value={username} />
       </div>
       <div className="relative flex flex-col w-[80%] md:w-100 gap-1">
         <label className="text-txt" htmlFor="password">Password:</label>
-        {showPass 
-        ? <FaEye className="absolute top-1/2 right-1.5 -translate-x-1/2 -translate-y-1/2 cursor-pointer text-amber-50" 
-        onClick={() => setShowPass(false)}/>
-        : <FaEyeSlash className="absolute top-1/2 right-1.5 -translate-x-1/2 -translate-y-1/2 cursor-pointer text-amber-50"
-        onClick={() => setShowPass(true)} />}
-        <input className="border border-dark-gray rounded-lg py-1 px-2 text-txt" type={showPass ? "text" : "password"} 
+        {password.length > 0 && <ShowPassword showPass={showPass} setShowPass={setShowPass} />}
+        <input id="password" className="border border-dark-gray rounded-lg py-1 px-2 text-txt" type={showPass ? "text" : "password"} 
         onChange={(e) => setPassword(e.target.value)} value={password} />
         <a className="text-blue-600 font-semibold" href="">Forgot password?</a>
       </div>
@@ -49,6 +45,19 @@ const Login = () => {
       cursor-pointer disabled:cursor-wait disabled:opacity-70" onClick={login} disabled={loading} >LOG IN</button>
       <a className="text-blue-600 font-semibold" href="/signup"><u>Create account</u></a>
     </div>
+  )
+}
+
+function ShowPassword({ showPass, setShowPass }){
+
+  return (
+    <>
+      {showPass 
+        ? <FaEye className="absolute top-1/2 right-1.5 -translate-x-1/2 -translate-y-1/2 cursor-pointer text-amber-50" 
+        onClick={() => setShowPass(false)}/>
+        : <FaEyeSlash className="absolute top-1/2 right-1.5 -translate-x-1/2 -translate-y-1/2 cursor-pointer text-amber-50"
+        onClick={() => setShowPass(true)} />}
+    </>
   )
 }
 
