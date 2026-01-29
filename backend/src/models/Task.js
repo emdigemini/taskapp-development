@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const taskSchema = new mongoose.Schema({
-  taskName: {
-    type: String,
-    required: true
-  },
-  
-
-}, { timestamps: true })
+  name: String,
+  objectives: String,
+  members: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }];
+})
