@@ -8,6 +8,8 @@ import rateLimiter from "./middleware/rateLimiter.js";
 import { connectDB } from "./config/db.js";
 import signupRoutes from "./routes/auth/signupRoutes.js";
 import loginRoutes from "./routes/auth/loginRoutes.js";
+import projectRoutes from "./routes/projectRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -22,6 +24,8 @@ app.use(rateLimiter);
 // routes
 app.use("/api/signup", signupRoutes);
 app.use("/api/login", loginRoutes);
+app.use("/api/project", projectRoutes);
+app.use("/api/task", taskRoutes);
 
 (async () => {
   try {

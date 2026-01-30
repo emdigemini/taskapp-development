@@ -1,12 +1,22 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 const taskSchema = new mongoose.Schema({
-  name: String,
-  objectives: String,
-  members: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
-  }]
+  members: [
+      { 
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      },
+      task: {
+        type: String,
+        required: true
+      },
+      objectives: {
+        type: String,
+        default: "No objectives given"
+      }
+    }
+  ]
 }, { timestamps: true });
 
 const Task = mongoose.model("Task", taskSchema);
