@@ -8,6 +8,7 @@ import rateLimiter from "./middleware/rateLimiter.js";
 import { connectDB } from "./config/db.js";
 import signupRoutes from "./routes/auth/signupRoutes.js";
 import loginRoutes from "./routes/auth/loginRoutes.js";
+import userRoutes from "./routes/auth/userRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
 
@@ -24,8 +25,9 @@ app.use(rateLimiter);
 // routes
 app.use("/api/signup", signupRoutes);
 app.use("/api/login", loginRoutes);
-app.use("/api/project", projectRoutes);
-app.use("/api/task", taskRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/projects", projectRoutes);
+app.use("/api/tasks", taskRoutes);
 
 (async () => {
   try {

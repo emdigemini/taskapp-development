@@ -2,12 +2,14 @@ import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import axiosInstance from "../../lib/axios.js";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [ loading, setLoading ] = useState(false);
   const [ showPass, setShowPass ] = useState(false);
   const [ username, setUsername ] = useState("");
   const [ password, setPassword ] = useState("");
+  const navigate = useNavigate();
 
   const login = async () => {
     if(loading) return;
@@ -18,6 +20,15 @@ const Login = () => {
       setUsername("");
       setPassword("");
       toast.success(res.data.message);
+
+      localStorage.setItem("token", res.data.token);
+      navigate("/home");
+
+      axiosInstance.get("/home", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
     } catch (err) {
       toast.error(err.response?.data.message || "Server failed, try again later");
       setLoading(false);
