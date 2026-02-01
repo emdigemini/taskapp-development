@@ -3,10 +3,10 @@ import { getProjects, createProject, getSelectedProject, updateProject, deletePr
 
 const router = express.Router();
 
-router.get("/", getProjects);
-router.post("/", createProject);
-router.get("/:id", getSelectedProject);
-router.put("/:id", updateProject);
-router.delete("/:id", deleteProject);
+router.get("/projects", getProjects);
+router.post("/projects", createProject);
+router.get("/projects/:id", getSelectedProject);
+router.put("/projects/:id", updateProject);
+router.delete("/projects/:id", deleteProject);
 
 export default router;

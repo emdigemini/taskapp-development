@@ -22,11 +22,17 @@ export const loginUser = async (req, res) => {
       {id: user._id},
       process.env.JWT_SECRET,
       {expiresIn: process.env.JWT_EXPIRES_IN || "1d"}
-    )
+    );
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false, // set true when deploy
+      sameSite: "strict", // anti CSRF
+      maxAge: 24 * 60 * 60 * 1000 // 1 day
+    })
 
     res.status(200).json({
       message: "Login successfully",
-      token,
       user: {
         id: user._id,
         username: user.username,
@@ -37,4 +43,19 @@ export const loginUser = async (req, res) => {
     console.log("Error in loginUser controller", err);
     res.status(500).json({message: "Internal server error"});
   }
-}
+};
+
+export const logoutUser = async (req, res) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: false // true pag HTTPS
+    });
+
+    res.json({ message: "Logged out" });
+  } catch (err) {
+    console.log("Error in logoutUser controller");
+    res.status(500).json({message: "Internal server error"});
+  }
+};

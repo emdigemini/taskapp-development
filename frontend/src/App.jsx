@@ -6,37 +6,37 @@ import SignUp from "./pages/Auth/SignUp"
 import Home from "./pages/Home/Home"
 
 const App = () => {
+  const protectedLink = [
+    { path: "/home", component: <Home /> },
+  ]
+
+  const publicLink = [
+    { path: "/", component: <Login /> },
+    { path: "/login", component: <Login /> },
+    { path: "/signup", component: <SignUp /> },
+  ]
   
   return (
     <div>
       <Routes>
-        {/* Signup page → only accessible if NOT logged in */}
-        <Route path="/signup" element={
-          <PublicRoute>
-            <SignUp />
-          </PublicRoute>
-        } />
-
-        {/* Login page → only accessible if NOT logged in */}
-        <Route path="/login" element={
-          <PublicRoute>
-            <Login />
-          </PublicRoute>
-        } />
-
-        {/* Dashboard page → only accessible if logged in */}
-        <Route path="/home" element={
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        } />
-
-        {/* Optional: redirect root "/" */}
-        <Route path="/" element={
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        } />
+        {publicLink.map(({ path, component }) => {
+          return (
+            <Route key={path} path={path} element={
+              <PublicRoute>
+                {component}
+              </PublicRoute>
+            } />
+          )
+        })}
+        {protectedLink.map(({ path, component }) => {
+          return (
+            <Route key={path} path={path} element={
+              <ProtectedRoute>
+                {component}
+              </ProtectedRoute>
+            } />
+          )
+        })}
       </Routes>
     </div>
   )

@@ -1,34 +1,30 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import axiosInstance from "../../lib/axios.js";
-import { useNavigate } from "react-router-dom";
+import authContext from "../../context/authContext.jsx";
 
 const Login = () => {
   const [ loading, setLoading ] = useState(false);
   const [ showPass, setShowPass ] = useState(false);
   const [ username, setUsername ] = useState("");
   const [ password, setPassword ] = useState("");
-  const navigate = useNavigate();
+  const { setAuthenticated } = useContext(authContext);
 
   const login = async () => {
     if(loading) return;
 
     try {
       setLoading(true);
-      const res = await axiosInstance.post("/login", { username, password });
+      const res = await axiosInstance.post("/login", 
+        { username, password }, 
+        { withCredentials: true }
+      );
       setUsername("");
       setPassword("");
       toast.success(res.data.message);
+      setAuthenticated(true);
 
-      localStorage.setItem("token", res.data.token);
-      navigate("/home");
-
-      axiosInstance.get("/home", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      })
     } catch (err) {
       toast.error(err.response?.data.message || "Server failed, try again later");
       setLoading(false);

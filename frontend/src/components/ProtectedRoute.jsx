@@ -1,10 +1,16 @@
+import { useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import axiosInstance from "../lib/axios.js";
+import authContext from "../context/authContext.jsx";
 
 const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem("token");
-  if(!token){
-    return <Navigate to="/login" replace/> 
-  }
+  const { authenticated, loading } = useContext(authContext);
+  
+  if(loading) return null;
+
+  if(!authenticated)
+    return <Navigate to="/login" replace />;
+
   return children;
 }
 
