@@ -10,6 +10,7 @@
 
   /* main blue */
   --color-blue: #2563EB;
+  --color-hblue: #1D4ED8; 
 }
 
 body {
@@ -22,4 +23,5 @@ body {
 #root {
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
 }

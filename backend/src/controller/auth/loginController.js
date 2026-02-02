@@ -26,11 +26,11 @@ export const loginUser = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // set true when deploy
-      sameSite: "strict", // anti CSRF
-      maxAge: 24 * 60 * 60 * 1000 // 1 day
+      sameSite: "strict",
+      secure: false,
+      maxAge: 24 * 60 * 60 * 1000
     })
-
+    
     res.status(200).json({
       message: "Login successfully",
       user: {
@@ -50,9 +50,8 @@ export const logoutUser = async (req, res) => {
     res.clearCookie("token", {
       httpOnly: true,
       sameSite: "strict",
-      secure: false // true pag HTTPS
-    });
-
+      secure: false
+    })
     res.json({ message: "Logged out" });
   } catch (err) {
     console.log("Error in logoutUser controller");

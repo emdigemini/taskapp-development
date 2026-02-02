@@ -8,7 +8,7 @@ const PublicRoute = ({ children }) => {
   if(loading) return null;
 
   if(authenticated)
-    return <Navigate to="/home" replace />
+    return <Navigate to="/dashboard" replace />
 
   return children;
 }

@@ -6,27 +6,27 @@ const AuthProvider = ({ children }) => {
   const [ authenticated, setAuthenticated ] = useState(false);
   const [ loading, setLoading ] = useState(true);
 
-  useEffect(() => {
-    let isMounted = true;
-    const checkAuth = async () => {
-      try {
-        await axiosInstance.get("/users/me", {withCredentials: true});        
-        if(isMounted)setAuthenticated(true);
-      } catch (err) {
-        if(err.response.status !== 401){
-          console.log("Unauthorized error", err);
-        }
-        if(isMounted)setAuthenticated(false);
-      } finally {
-        if(isMounted)setLoading(false);
+  const checkAuth = async ({ showLoading = false }) => {
+    if(showLoading) setLoading(true);
+    try {
+      await axiosInstance.get("/users/me", {withCredentials: true});        
+      setAuthenticated(true);
+    } catch (err) {
+      if(err.response?.status !== 401){
+        console.log("Unauthorized error", err);
       }
+      setAuthenticated(false);
+    } finally {
+      if(showLoading) setLoading(false);
     }
-    checkAuth();
-    return () => isMounted = false
+  }
+
+  useEffect(() => {
+    checkAuth({ showLoading: true });
   }, []);
 
   return (
-    <authContext.Provider value={{ authenticated, setAuthenticated, loading }}>
+    <authContext.Provider value={{ authenticated, setAuthenticated, loading, checkAuth }}>
       {children}
     </authContext.Provider>
   )
