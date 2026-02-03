@@ -9,7 +9,7 @@ const AuthProvider = ({ children }) => {
   const checkAuth = async ({ showLoading = false }) => {
     if(showLoading) setLoading(true);
     try {
-      await axiosInstance.get("/users/me", {withCredentials: true});        
+      const userData = await axiosInstance.get("/users/me", {withCredentials: true});        
       setAuthenticated(true);
     } catch (err) {
       if(err.response?.status !== 401){
