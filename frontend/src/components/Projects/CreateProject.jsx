@@ -4,7 +4,7 @@ const CreateProject = ({ setCreatingProject }) => {
     top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-145.5 rounded-2xl">
       <div className="flex flex-col">
         <label htmlFor="name">Project Name</label>
-        <input id="name" type="text" 
+        <input id="name" type="text" autoComplete="off"
         className="border border-[#EBEBEB] rounded-md bg-[#1F1F1F] text-white p-2" />
       </div>
 

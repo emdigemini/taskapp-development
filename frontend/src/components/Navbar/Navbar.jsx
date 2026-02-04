@@ -41,7 +41,7 @@ const Navbar = () => {
         `}
       >
         <BsLayoutSidebarInset
-          className="absolute cursor-e-resize text-white text-2xl top-4 right-2"
+          className="absolute cursor-e-resize text-white text-2xl top-4 right-4"
           onClick={toggleSideBar}
         />
 
