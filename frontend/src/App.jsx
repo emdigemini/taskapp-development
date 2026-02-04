@@ -4,11 +4,19 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import PublicRoute from "./components/PublicRoute"
 import Login from "./pages/Auth/Login"
 import SignUp from "./pages/Auth/SignUp"
-import Dashboard from "./pages/Home/Dashboard"
+import Dashboard from "./pages/Dashboard/Dashboard"
+import Projects from "./pages/Projects/Projects"
+import Team from "./pages/Team/Team"
+import Messages from "./pages/Messages/Messages"
+import Profile from "./pages/Profile/Profile"
 
 const App = () => {
   const protectedLinks = [
-    { path: "/dashboard", component: <Dashboard />  }
+    { path: "/dashboard", component: <Dashboard />  },
+    { path: "/projects", component: <Projects />  },
+    { path: "/team", component: <Team />  },
+    { path: "/messages", component: <Messages />  },
+    { path: "/profile", component: <Profile />  },
   ]
 
   const publicLinks = [
