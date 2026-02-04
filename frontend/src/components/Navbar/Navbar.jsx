@@ -30,7 +30,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className="flex">
+    <div className="flex w-full">
       <aside
         className={`
           relative top-0 left-0 min-h-screen flex flex-col items-center py-16 justify-between
@@ -41,7 +41,7 @@ const Navbar = () => {
         `}
       >
         <BsLayoutSidebarInset
-          className="absolute cursor-e-resize text-white text-2xl top-4 right-4"
+          className="absolute cursor-e-resize text-white text-2xl top-4 right-2"
           onClick={toggleSideBar}
         />
 
