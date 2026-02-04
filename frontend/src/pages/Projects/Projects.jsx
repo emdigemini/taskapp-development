@@ -1,6 +1,6 @@
 const Projects = () => {
   return (
-    <div className="min-w-full">Projects</div>
+    <div className="flex-1 ">Projects</div>
   )
 }
 

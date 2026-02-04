@@ -17,6 +17,9 @@ export const createProject = async (req, res) => {
     if(!name || !startDate || !endDate || !userId)
       return res.status(400).json({message: "All fields are required!"});
 
+    const creatorId = req.user.id;
+    console.log(creatorId);
+
     const invalidUserIds = [];
 
     for(let user of userId){

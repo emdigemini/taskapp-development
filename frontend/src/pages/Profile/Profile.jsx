@@ -1,6 +1,6 @@
 const Profile = () => {
   return (
-    <div className="min-w-full">Profile</div>
+    <div className="flex-1 ">Profile</div>
   )
 }
 

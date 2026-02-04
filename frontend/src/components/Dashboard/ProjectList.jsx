@@ -38,8 +38,9 @@ const ProjectList = () => {
 
 const ProjectBox = () => {
   return (
-    <div className="h-50 w-55 bg-[#1F1F1F] rounded-xl">
-
+    <div className="h-50 w-55 bg-[#1F1F1F] rounded-xl text-white flex flex-col items-center justify-around">
+      <h1 className="text-2xl">Project Name</h1>
+      <p>date created</p>
     </div>
   )
 }
