@@ -1,6 +1,6 @@
 import { Outlet, Link } from "react-router-dom"
 import { useContext, useState } from "react"
-import authContext from "../../context/authContext";
+import authContext from "../../context/Auth/authContext.jsx";
 import axiosInstance from "../../lib/axios.js";
 import { BsLayoutSidebarInset } from "react-icons/bs";
 import { LuLayoutDashboard } from "react-icons/lu";

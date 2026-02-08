@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import authContext from "./authContext";
-import axiosInstance from "../lib/axios";
+import axiosInstance from "../../lib/axios";
 
 const AuthProvider = ({ children }) => {
   const [ authenticated, setAuthenticated ] = useState(false);

@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import axiosInstance from "../../lib/axios.js";
-import authContext from "../../context/authContext.jsx";
+import authContext from "../../context/Auth/authContext.jsx";
 
 const Login = () => {
   const [ loading, setLoading ] = useState(false);
@@ -17,9 +17,7 @@ const Login = () => {
     try {
       setLoading(true);
       const res = await axiosInstance.post("/login", 
-        { username, password }, 
-        { withCredentials: true }
-      );
+        { username, password });
       setUsername("");
       setPassword("");
       toast.success(res.data.message);

@@ -1,9 +1,9 @@
 import Project from "../models/Project.js";
 import User from "../models/auth/User.js";
 
-export const getProjects = async (_, res) => {
+export const getProjects = async (req, res) => {
   try {
-    const projects = await Project.find();
+    const projects = await Project.find({ creatorId: req.user.id  }).sort({ createdAt: -1 });
     res.status(200).json(projects);
   } catch (err) {
     console.log("Error in getProjects controller", err);
@@ -13,25 +13,24 @@ export const getProjects = async (_, res) => {
 
 export const createProject = async (req, res) => {
   try {
-    const { name, startDate, endDate, userId} = req.body;
-    if(!name || !startDate || !endDate || !userId)
+    const { projName, startDate, endDate } = req.body;
+    if(!projName || !startDate || !endDate)
       return res.status(400).json({message: "All fields are required!"});
 
     const creatorId = req.user.id;
-    console.log(creatorId);
 
-    const invalidUserIds = [];
+    // const invalidUserIds = [];
 
-    for(let user of userId){
-      const exists = await User.findById(user);
-      if(!exists) invalidUserIds.push(user);
-    }
+    // for(let user of userId){
+    //   const exists = await User.findById(user);
+    //   if(!exists) invalidUserIds.push(user);
+    // }
 
-    console.log(invalidUserIds);
-    if(invalidUserIds.length > 0)
-      return res.status(404).json({message: `${[...invalidUserIds]} not found.`});
+    // console.log(invalidUserIds);
+    // if(invalidUserIds.length > 0)
+    //   return res.status(404).json({message: `${[...invalidUserIds]} not found.`});
 
-    const newProject = await Project.create({ name, startDate, endDate, members: userId });
+    const newProject = await Project.create({ projName, startDate, endDate, creatorId /*members: userId */});
     res.status(201).json({message: "Project created successfully.", project: newProject});
 
     

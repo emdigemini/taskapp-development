@@ -1,9 +1,12 @@
 import Navbar from "./Navbar/Navbar"
+import ProjectProvider from "../context/Projects/ProjectProvider"
 
 const ProtectedLayout = () => {
   return (
     <div className="flex w-full">
-      <Navbar />
+      <ProjectProvider>
+        <Navbar />
+      </ProjectProvider>
     </div>
   )
 }
